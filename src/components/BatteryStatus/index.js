@@ -24,14 +24,10 @@ class BatteryStatus extends Component {
     this.updateBatteryUI(battery);
   
     // Monitor for futher updates.
-    battery.addEventListener('levelchange',
-      this.updateBatteryUI.bind(null, battery));
-    battery.addEventListener('chargingchange',
-      this.updateBatteryUI.bind(null, battery));
-    battery.addEventListener('dischargingtimechange',
-      this.updateBatteryUI.bind(null, battery));
-    battery.addEventListener('chargingtimechange',
-      this.updateBatteryUI.bind(null, battery));
+    battery.addEventListener('levelchange', this.updateBatteryUI.bind(null, battery));
+    battery.addEventListener('chargingchange', this.updateBatteryUI.bind(null, battery));
+    battery.addEventListener('dischargingtimechange', this.updateBatteryUI.bind(null, battery));
+    battery.addEventListener('chargingtimechange', this.updateBatteryUI.bind(null, battery));
   };
 
   updateBatteryUI = battery => {
