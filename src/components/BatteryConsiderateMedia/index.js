@@ -8,17 +8,9 @@ const BatteryConsiderateMedia = () => {
    const batteryStatus = useBatteryStatus();
    if (!batteryStatus) return <Fragment>Loading...</Fragment>;
 
-  console.log('[BatteryConsiderateMedia] batteryStatus => ', batteryStatus);
+  console.log('[BatteryConsiderateMedia] batteryStatus, batteryStatus.unsupportMessage => ', batteryStatus, batteryStatus.unsupportMessage);
 
-  // ray test touch <
-  if (batteryStatus && batteryStatus.chargingState === 'Charging') {
-    return <img className="responsive" src="https://cdn.glitch.com/8d7fb7f0-a9be-4a8c-96c7-8af286af487e%2Fmax-res.jpg?v=1562842587982" alt="maximum size" />;
-  } else {
-    return null;
-  }
-  // ray test touch >
-
-  let media;
+  let media = null;
   const batteryLevel = batteryStatus.level;
   switch(true) {
     case batteryLevel > .75:
@@ -34,12 +26,7 @@ const BatteryConsiderateMedia = () => {
       media = <img className="responsive" src="https://cdn.glitch.com/8d7fb7f0-a9be-4a8c-96c7-8af286af487e%2Fmin-res.jpg?v=1562842586912" alt="minimum size" />;
       break;
     default:
-      media = (
-        <Fragment>
-          {/* <span>{batteryStatus}</span> */}
-          <video className="responsive" src="https://cdn.glitch.com/8d7fb7f0-a9be-4a8c-96c7-8af286af487e%2F4g-video.mp4?v=1562842601068" controls />
-        </Fragment>
-      );
+      media = <video className="responsive" src="https://cdn.glitch.com/8d7fb7f0-a9be-4a8c-96c7-8af286af487e%2F4g-video.mp4?v=1562842601068" controls />;
       break;
   }
 

@@ -19,24 +19,20 @@ const useBatteryStatus = () => {
 
   const updateBatteryStatus = battery => {
     setBatteryStatus({
-      chargingTime: battery.chargingTime + ' Seconds',
-      dichargeTime: battery.dischargingTime + ' Seconds',
-      level: (battery.level * 100) + '%'
+      chargingTime: `${battery.chargingTime} Seconds`,
+      dichargeTime: `${battery.dischargingTime} Seconds`,
+      level: battery.level,
+      chargingState: battery.charging === true ? 'Charging' : 'Discharging'
     });
-
-    if (battery.charging === true) {
-      setBatteryStatus({chargingState: 'Charging'});
-    } else if (battery.charging === false) {
-      setBatteryStatus({chargingState: 'Discharging'});
-    }
   };
 
   useEffect(() => {
     if ('getBattery' in navigator) {
       navigator.getBattery().then(monitorBattery);
     } else {
-      alert('The Battery Status API is not supported on this platform.');
+      setBatteryStatus({unsupportMessage});
     }
+  // eslint-disable-next-line
   }, []);
 
   return batteryStatus;
