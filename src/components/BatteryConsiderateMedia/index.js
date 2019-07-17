@@ -10,6 +10,7 @@ const BatteryConsiderateMedia = () => {
 
   console.log('[BatteryConsiderateMedia] batteryStatus => ', batteryStatus);
 
+  
   let media;
   const batteryLevel = batteryStatus.level;
   switch(true) {

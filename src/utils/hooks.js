@@ -21,19 +21,20 @@ const useBatteryStatus = () => {
   }, []);
 
   useEffect(() => {
+    console.log('ray : ***** listener effect watch');
     if(batteryStatus && batteryStatus !== unsupportMessage) {
-      batteryStatus.addEventListener('levelchange', updateBatteryStatus);
-      batteryStatus.addEventListener('chargingchange', updateBatteryStatus);
-      batteryStatus.addEventListener('dischargingtimechange', updateBatteryStatus);
-      batteryStatus.addEventListener('chargingtimechange', updateBatteryStatus);
+      batteryStatus.addEventListener('levelchange', updateBatteryStatus.bind(null, batteryStatus));
+      batteryStatus.addEventListener('chargingchange', updateBatteryStatus.bind(null, batteryStatus));
+      batteryStatus.addEventListener('dischargingtimechange', updateBatteryStatus.bind(null, batteryStatus));
+      batteryStatus.addEventListener('chargingtimechange', updateBatteryStatus.bind(null, batteryStatus));
       return () => {
-        batteryStatus.removeEventListener('levelchange', updateBatteryStatus);
-        batteryStatus.removeEventListener('chargingchange', updateBatteryStatus);
-        batteryStatus.removeEventListener('dischargingtimechange', updateBatteryStatus);
-        batteryStatus.removeEventListener('chargingtimechange', updateBatteryStatus);
+        batteryStatus.removeEventListener('levelchange', updateBatteryStatus.bind(null, batteryStatus));
+        batteryStatus.removeEventListener('chargingchange', updateBatteryStatus.bind(null, batteryStatus));
+        batteryStatus.removeEventListener('dischargingtimechange', updateBatteryStatus.bind(null, batteryStatus));
+        batteryStatus.removeEventListener('chargingtimechange', updateBatteryStatus.bind(null, batteryStatus));
       }
     }
-  }, [batteryStatus]);
+  });
 
   return batteryStatus;
 };
