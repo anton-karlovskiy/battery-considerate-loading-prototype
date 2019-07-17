@@ -38,4 +38,4 @@ const useBatteryStatus = () => {
   return batteryStatus;
 };
 
-export { useBatteryStatus }
+export { useBatteryStatus };
