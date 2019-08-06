@@ -11,10 +11,16 @@ const useBatteryStatus = () => {
     updateBatteryStatus(battery);
   
     // Monitor for futher updates
-    battery.addEventListener('levelchange', updateBatteryStatus.bind(null, battery));
-    battery.addEventListener('chargingchange', updateBatteryStatus.bind(null, battery));
-    battery.addEventListener('dischargingtimechange', updateBatteryStatus.bind(null, battery));
-    battery.addEventListener('chargingtimechange', updateBatteryStatus.bind(null, battery));
+    // ray test touch <
+    // battery.addEventListener('levelchange', updateBatteryStatus.bind(null, battery));
+    // battery.addEventListener('chargingchange', updateBatteryStatus.bind(null, battery));
+    // battery.addEventListener('dischargingtimechange', updateBatteryStatus.bind(null, battery));
+    // battery.addEventListener('chargingtimechange', updateBatteryStatus.bind(null, battery));
+    battery.addEventListener('levelchange', battery => updateBatteryStatus(battery));
+    battery.addEventListener('chargingchange', battery => updateBatteryStatus(battery));
+    battery.addEventListener('dischargingtimechange', battery => updateBatteryStatus(battery));
+    battery.addEventListener('chargingtimechange', battery => updateBatteryStatus(battery));
+    // ray test touch >
   };
 
   const updateBatteryStatus = battery => {
