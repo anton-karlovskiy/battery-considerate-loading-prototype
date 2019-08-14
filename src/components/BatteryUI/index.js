@@ -21,64 +21,48 @@ class BatteryUI extends Component {
   }
 
   // ray test touch <
-  // monitorBattery = battery => {
-  //   // Update the initial UI
-  //   this.updateBatteryUI(battery);
-  
-  //   // Monitor for futher updates
-  //   battery.addEventListener('levelchange', this.updateBatteryUI.bind(null, battery));
-  //   battery.addEventListener('chargingchange', this.updateBatteryUI.bind(null, battery));
-  //   battery.addEventListener('dischargingtimechange', this.updateBatteryUI.bind(null, battery));
-  //   battery.addEventListener('chargingtimechange', this.updateBatteryUI.bind(null, battery));
-  // };
-
   monitorBattery = battery => {
-    function updateAllBatteryInfo() {
-      updateChargeInfo();
-      updateLevelInfo();
-      updateChargingInfo();
-      updateDischargingInfo();
-    }
-    updateAllBatteryInfo();
-
-    battery.addEventListener('chargingchange', function() {
-      updateChargeInfo();
-    });
-    function updateChargeInfo() {
+    const updateChargeInfo = () => {
       console.log("Battery charging? " + (battery.charging ? "Yes" : "No"));
-    }
+      this.setState({
+        chargingState: battery.charging === true ? 'Charging' : 'Discharging'
+      });
+    };
+    battery.addEventListener('chargingchange', battery => updateChargeInfo(battery));
   
-    battery.addEventListener('levelchange', function() {
-      updateLevelInfo();
-    });
-    function updateLevelInfo() {
+    const updateLevelInfo = () => {
       console.log("Battery level: " + battery.level * 100 + "%");
-    }
+      this.setState({
+        level: `${battery.level * 100}%`,
+      });
+    };
+    battery.addEventListener('levelchange', battery => updateLevelInfo(battery));
   
-    battery.addEventListener('chargingtimechange', function() {
-      updateChargingInfo();
-    });
-    function updateChargingInfo() {
+    const updateChargingInfo = () => {
       console.log("Battery charging time: " + battery.chargingTime + " seconds");
-    }
+      this.setState({
+        chargingTime: `${battery.chargingTime} Seconds`,
+      });
+    };
+    battery.addEventListener('chargingtimechange', battery => updateChargingInfo(battery));
   
-    battery.addEventListener('dischargingtimechange', function() {
-      updateDischargingInfo();
-    });
-    function updateDischargingInfo() {
+    const updateDischargingInfo = () => {
       console.log("Battery discharging time: " + battery.dischargingTime + " seconds");
-    }
+      this.setState({
+        dichargeTime: `${battery.dischargingTime} Seconds`,
+      });
+    };
+    battery.addEventListener('dischargingtimechange', battery => updateDischargingInfo(battery));
+
+    const updateAllBatteryInfo = () => {
+      updateChargeInfo(battery);
+      updateLevelInfo(battery);
+      updateChargingInfo(battery);
+      updateDischargingInfo(battery);
+    };
+    updateAllBatteryInfo();
   };
   // ray test touch >
-
-  updateBatteryUI = battery => {
-    this.setState({
-      chargingTime: `${battery.chargingTime} Seconds`,
-      dichargeTime: `${battery.dischargingTime} Seconds`,
-      level: `${battery.level * 100}%`,
-      chargingState: battery.charging === true ? 'Charging' : 'Discharging'
-    });
-  };
 
   render () {
     const { chargingTime, chargingState, dichargeTime, level, unsupportMessage } = this.state;
